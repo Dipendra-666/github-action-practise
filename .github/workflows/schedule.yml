@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "* * * * *"
   push:
-    branches: [master, main]  # Add this to run on both branches
+    branches: [master, main, dev]  
 
 jobs:
   run-every-minute:
