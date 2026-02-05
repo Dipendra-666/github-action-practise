@@ -1,0 +1,14 @@
+name: run every one minute workflow
+
+on:
+  schedule:
+    - cron: "* * * * *"
+  push:
+    branches: [master, main]  # Add this to run on both branches
+
+jobs:
+  run-every-minute:
+    runs-on: ubuntu-latest
+    steps:
+     - name: run on every one minute
+       run: echo "this workflow was designed to run every one minute at a time"
