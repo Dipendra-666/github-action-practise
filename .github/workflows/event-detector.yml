@@ -1,0 +1,22 @@
+name: Event Detector Workflow
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  detect-event:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
+
+    - name: event 
+      run: |
+        echo "this event is triggered by : ${{github.event_name}}"
+        echo "this branch name is: ${{github.ref_name}}"
+        echo "this is full ref: ${{github.ref}}"
+
