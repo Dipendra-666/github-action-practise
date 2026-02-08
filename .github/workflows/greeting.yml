@@ -1,7 +1,7 @@
 name: workflow for the greeting action
 on:
     push:
-      branches: [master]
+      branches: [dev]
 
 jobs:
       greeting:
