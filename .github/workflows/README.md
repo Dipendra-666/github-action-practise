@@ -3,4 +3,4 @@ on this project i am gonna create the workflow and actively demonstrate on how t
 
 
 event detector workflow 
-just changeing to create the pull request to the master branch from the main 
+just making small changes to the file to trigger the pull_request 
