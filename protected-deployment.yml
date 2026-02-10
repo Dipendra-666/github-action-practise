@@ -1,0 +1,36 @@
+name: Protected Deployment
+
+on:
+  push:
+    branches:
+      - 'release/*'              # e.g. release/v1.0, release/hotfix-123
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Mock build Docker image
+        run: echo "Building Docker image for ${{ github.ref_name }}..."
+
+      # In real life: use docker/build-push-action here
+      # For learning: we just pretend it's built
+
+      - name: Deploy to staging
+        uses: azure/webapps-deploy@v3   # example - replace with real action
+        with:
+          app-name: my-staging-app      # your Azure App Service name
+          publish-profile: ${{ secrets.AZURE_STAGING_PUBLISH_PROFILE }}
+          package: .                    # or path to built files
+
+      # This step will wait for manual approval
+      - name: Deploy to production (requires approval)
+        environment: production        # ← links to GitHub environment
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: my-production-app
+          publish-profile: ${{ secrets.AZURE_PROD_PUBLISH_PROFILE }}
+          package: .
