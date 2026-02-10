@@ -3,7 +3,7 @@ name: Protected Deployment
 on:
   push:
     branches:
-      - 'release/*'              # e.g. release/v1.0, release/hotfix-123
+      - 'feature/*'              # e.g. release/v1.0, release/hotfix-123
 
 jobs:
   build-and-deploy:
