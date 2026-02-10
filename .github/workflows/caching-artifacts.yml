@@ -29,11 +29,11 @@ jobs:
 
       steps:
         - name: caching concept
-          uses: actions/chache@v4
+          uses: actions/cache@v4
           with:
             path: ~/.npm
-            key: ${{ runner.os }}-node-{{ hashfiles(**/package-lock.josn)}}
-            restore-keys: ${{ runner.os}}-node-
+            key: ${{ runner.os }}-node-{{ hashFiles('**/package-lock.josn') }}
+            restore-keys: ${{ runner.os }}-node-
 
       
         - name: downloading the artifacts
