@@ -1,0 +1,45 @@
+name: Cache and Artifact Flow
+
+on:
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: building the artifacts
+        run: echo "build the artifacts" > artifact.txt
+
+      - name: uploading the artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: artifact.txt
+          retention-days: 1
+    
+
+  test:
+      runs-on: ubuntu-latest
+      needs: build
+
+      steps:
+        - name: caching concept
+          uses: actions/cache@v4
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-{{ hashFiles('**/package-lock.josn') }}
+            restore-keys: ${{ runner.os }}-node-
+
+      
+        - name: downloading the artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: build-artifact
+
+        - name: displaying the content of the artifact
+          run: cat artifact.txt
