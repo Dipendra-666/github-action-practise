@@ -1,0 +1,26 @@
+name: Personalized Greeting Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Enter your name to print a personalized greeting"
+        required: false
+        type: string
+        default: ''
+
+env:
+  MY_ENV_VAR: "this is from environment variable"
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: personalized greeting
+        if: ${{ inputs.name != '' }}
+        run: |
+          echo "hello, ${{ inputs.name}}"
+          echo "${{ env.MY_ENV_VAR }}"
+          echo "${{ secrets.GREETING_SECRET }}"
+          
