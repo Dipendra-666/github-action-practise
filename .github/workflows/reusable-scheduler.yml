@@ -1,0 +1,30 @@
+name: Reusable Scheduler Workflow
+
+on:
+  schedule:
+    - cron: '0 9 * * 1-5'
+
+jobs:
+  daily-greeting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Greet someone
+        id: greeter
+        uses: ./.github/workflows/actions/my-greeter
+        with:
+          name: 'Dipendra'
+
+      - name: Display the greeting
+        run: echo "${{ steps.greeter.outputs.greeting }}"
+
+      - name: extra weekday motivation
+        if: ${{ github.event.schedule == '0 9 * * 1-5' }}
+        run: echo "Keep pushing forward! You're doing great!"
+
+      - name: weekend message (only if not weekday)
+        if: ${{ github.event.schedule != '0 9 * * 1-5' }}
+        run: echo "Enjoy your weekend! Relax and recharge!"
