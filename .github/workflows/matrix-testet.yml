@@ -1,0 +1,31 @@
+name: Matrix Tester Workflow
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os}}
+
+
+    strategy:
+      matrix:
+        node-version: [20,22]
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+        
+      - name: setup node node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: shows environment info
+        run: |
+          echo " running on os: ${{ matrix.os }}"
+          echo " node version $(node --version)"
+          echo " test passed on node ${{ matrix.node-version }} / ${{ matrix.os }}"
